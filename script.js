@@ -1,7 +1,11 @@
 const AMIGOS = {
-    "alejo": { pass: "aura", secreto: "Bienvenido a el mejor portafolio de ética" },
-    "juandiemonda": { pass: "isabella", secreto: "te gusta la verga y voy a rebelar tus archivos 👹" },
-    "johan": { pass: "johan123", secreto: "Johan, ser luz es influir positivamente. ¡Gracias por estar!" }
+    "alejo": { pass: "aura", secreto: "Bienvenido al mejor portafolio de ética" },
+    "juandiemonda": { pass: "isabella", secreto: "compañero de cuarto, te gusta la verga y voy a revelar tus archivos 👹" },
+    "lupita": { pass: "valeria", secreto: "Bro todos sabemos que te gusta Valeria" },
+    "gonzalejo": { pass: "alfaro", secreto: "Valery te metio cule cachera 👹" },
+    "gabito": { pass: "sonia", secreto: "no voy a ponerte secreto gabito" },
+    "jcvegaq": { pass: "camila", secreto: "Te le declaraste a Jire" },
+    "juanvargasb": { pass: "bedoya", secreto: "Compañero de cuarto, yo se que quieres volver con Marianita" }
 };
 
 const API_URL = 'https://68c20740f9928dbf33ed3483.mockapi.io/cx8/etica';
