@@ -1,0 +1,146 @@
+:root {
+    --accent: #00f2fe;
+    --accent-glow: rgba(0, 242, 254, 0.4);
+    --bg: #030712;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #f9fafb;
+    --text-dim: #9ca3af;
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.glow-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% -20%, #1e293b, transparent);
+    z-index: -1;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* Navbar con efecto Glass */
+.navbar {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0; z-index: 100;
+}
+
+.logo { 
+    font-weight: 800; 
+    font-size: 1.4rem; 
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.logo:hover { transform: scale(1.05); filter: drop-shadow(0 0 8px var(--accent)); }
+.logo span { color: var(--accent); }
+
+/* Hero Section */
+.hero { padding: 60px 0 20px; text-align: center; }
+.hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; margin-bottom: 15px; }
+
+/* AQUÍ ESTÁ LA CORRECCIÓN DEL ERROR DE COMPATIBILIDAD */
+.hero span {
+    background: linear-gradient(90deg, var(--accent), #4facfe);
+    background-clip: text; 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.2));
+}
+
+.intro-section { max-width: 800px; margin: 0 auto 40px; text-align: center; padding: 30px 20px; }
+.intro-text { font-size: 1.1rem; color: var(--text-dim); }
+
+/* Grid y Cards con Animaciones */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 30px;
+    padding-bottom: 60px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 35px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    opacity: 0; /* Para el reveal inicial */
+    transform: translateY(20px);
+}
+
+/* Efecto de luz al pasar el mouse por la tarjeta */
+.card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(0, 242, 254, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    transition: 0.5s;
+}
+
+.card:hover::before { left: 100%; }
+
+.date-tag { color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: block; }
+.card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #fff; letter-spacing: -0.5px; }
+
+.section-label { font-size: 0.65rem; color: #6366f1; text-transform: uppercase; font-weight: 800; margin-top: 25px; display: block; letter-spacing: 1px; }
+.card p { font-size: 0.95rem; color: #d1d5db; margin-top: 6px; }
+
+/* Tags con hover */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.tag { 
+    background: rgba(255,255,255,0.05); 
+    padding: 5px 12px; 
+    border-radius: 10px; 
+    font-size: 0.75rem; 
+    color: var(--accent); 
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.tag:hover { 
+    background: rgba(0, 242, 254, 0.1); 
+    border-color: var(--accent); 
+    transform: translateY(-2px);
+}
+
+/* Animación de entrada al cargar */
+@keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-reveal { animation: reveal 0.8s ease forwards; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .navbar { padding: 15px 20px; }
+    .grid-layout { grid-template-columns: 1fr; }
+}
