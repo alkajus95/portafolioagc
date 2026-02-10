@@ -1,7 +1,7 @@
 const AMIGOS = {
     "alejo": { pass: "aura", secreto: "Bienvenido al mejor portafolio de ética" },
     "juandiemonda": { pass: "isabella", secreto: "compañero de cuarto, te gusta la verga y voy a revelar tus archivos 👹" },
-    "lupita": { pass: "valeria", secreto: "Bro todos sabemos que te gusta Valeria" },
+    "lupita": { pass: "nada", secreto: "Bro todos sabemos que te gusta Valeria" },
     "gonzalejo": { pass: "alfaro", secreto: "Valery te metio cule cachera 👹" },
     "gabito": { pass: "sonia", secreto: "no voy a ponerte secreto gabito" },
     "jcvegaq": { pass: "camila", secreto: "Te le declaraste a Jire" },
