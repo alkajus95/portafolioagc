@@ -2,28 +2,141 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor Avanzado | Ética</title>
     <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        .admin-layout { max-width: 900px; margin: 40px auto; padding: 20px; display: grid; gap: 40px; }
+        .form-container { background: var(--card-bg); padding: 40px; border-radius: 30px; border: 1px solid var(--border); backdrop-filter: blur(20px); }
+        
+        label { color: var(--accent); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; display: block; margin: 15px 0 5px; }
+        input, textarea { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; color: white; font-family: inherit; }
+        
+        .btn-principal { width: 100%; padding: 15px; margin-top: 20px; background: linear-gradient(90deg, var(--accent), #4facfe); border: none; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-cancelar { width: 100%; padding: 10px; margin-top: 10px; background: transparent; border: 1px solid #ff4757; color: #ff4757; border-radius: 12px; cursor: pointer; display: none; }
+
+        /* Estilos de la lista de gestión */
+        .gestion-lista { display: grid; gap: 15px; }
+        .item-gestion { 
+            background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px; border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; transition: 0.3s;
+        }
+        .item-gestion:hover { background: rgba(255,255,255,0.05); }
+        .info-item h4 { font-size: 1rem; color: #fff; }
+        .info-item span { font-size: 0.7rem; color: var(--text-dim); }
+        
+        .acciones { display: flex; gap: 10px; }
+        .btn-edit { background: #ffa502; border: none; padding: 8px 15px; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer; }
+        .btn-delete { background: #ff4757; border: none; padding: 8px 15px; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
+    </style>
 </head>
-<body style="padding-top: 50px;">
+<body>
     <div class="glow-bg"></div>
-    <div class="container" style="max-width: 600px; background: var(--card-bg); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
-        <h2 style="margin-bottom: 20px; color: var(--accent);">Nueva Reflexión</h2>
-        <form id="form-admin">
-            <input type="text" id="fecha" placeholder="Fecha" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);">
-            <input type="text" id="tema" placeholder="Tema" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);">
-            <textarea id="objetivo" placeholder="Objetivo" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);"></textarea>
-            <textarea id="reconstruccion" placeholder="Reconstrucción" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);"></textarea>
-            <textarea id="queAprendi" placeholder="Aprendizaje" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);"></textarea>
-            <input type="text" id="terminos" placeholder="Términos" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);">
-            <textarea id="impactoSocial" placeholder="Impacto Social" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid var(--border);"></textarea>
-            <button type="submit" style="width: 100%; padding: 15px; background: var(--accent); color: #000; font-weight: 800; border: none; border-radius: 10px; cursor: pointer;">Publicar</button>
-        </form>
+
+    <div class="admin-layout">
+        <section class="form-container">
+            <h2 id="form-title" style="text-align: center; margin-bottom: 20px;">Nueva Reflexión</h2>
+            <form id="etica-form">
+                <input type="hidden" id="edit-id"> <label>Fecha</label>
+                <input type="text" id="fecha" placeholder="Ej: 09 de Feb, 2026" required>
+                
+                <label>Tema</label>
+                <input type="text" id="tema" required>
+
+                <label>Objetivo</label>
+                <textarea id="objetivo" rows="2" required></textarea>
+
+                <label>Reconstrucción (3ra Persona)</label>
+                <textarea id="reconstruccion" rows="3" required></textarea>
+
+                <label>Aprendizaje (1ra Persona)</label>
+                <textarea id="queAprendi" rows="3" required></textarea>
+
+                <label>Términos (Separados por coma)</label>
+                <input type="text" id="terminos" placeholder="Solidaridad, Ética...">
+
+                <label>Impacto Social</label>
+                <textarea id="impactoSocial" rows="2" required></textarea>
+
+                <button type="submit" class="btn-principal" id="btn-submit">Publicar Entrada</button>
+                <button type="button" class="btn-cancelar" id="btn-cancel" onclick="resetForm()">Cancelar Edición</button>
+            </form>
+        </section>
+
+        <section>
+            <h3 style="margin-bottom: 20px; color: var(--accent);">Gestionar Entradas Existentes</h3>
+            <div id="lista-admin" class="gestion-lista">
+                <p>Cargando registros...</p>
+            </div>
+        </section>
     </div>
+
     <script>
         const API = 'https://68c20740f9928dbf33ed3483.mockapi.io/cx8/etica';
-        document.getElementById('form-admin').addEventListener('submit', async (e) => {
+        const form = document.getElementById('etica-form');
+        const listaDiv = document.getElementById('lista-admin');
+        const btnSubmit = document.getElementById('btn-submit');
+        const btnCancel = document.getElementById('btn-cancel');
+        const formTitle = document.getElementById('form-title');
+
+        // 1. CARGAR LISTA
+        async function loadEntries() {
+            try {
+                const res = await fetch(API);
+                const data = await res.json();
+                listaDiv.innerHTML = '';
+                data.reverse().forEach(item => {
+                    listaDiv.innerHTML += `
+                        <div class="item-gestion">
+                            <div class="info-item">
+                                <h4>${item.tema}</h4>
+                                <span>${item.fecha}</span>
+                            </div>
+                            <div class="acciones">
+                                <button class="btn-edit" onclick='prepareEdit(${JSON.stringify(item)})'>Editar</button>
+                                <button class="btn-delete" onclick="deleteEntry('${item.id}')">Borrar</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (e) { listaDiv.innerHTML = '<p>Error al cargar entradas.</p>'; }
+        }
+
+        // 2. PREPARAR EDICIÓN
+        function prepareEdit(item) {
+            document.getElementById('edit-id').value = item.id;
+            document.getElementById('fecha').value = item.fecha;
+            document.getElementById('tema').value = item.tema;
+            document.getElementById('objetivo').value = item.objetivo;
+            document.getElementById('reconstruccion').value = item.reconstruccion;
+            document.getElementById('queAprendi').value = item.queAprendi;
+            document.getElementById('terminos').value = item.terminos;
+            document.getElementById('impactoSocial').value = item.impactoSocial;
+
+            formTitle.innerText = "Editando Reflexión";
+            btnSubmit.innerText = "Actualizar Entrada";
+            btnCancel.style.display = "block";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 3. RESETEAR FORMULARIO
+        function resetForm() {
+            form.reset();
+            document.getElementById('edit-id').value = "";
+            formTitle.innerText = "Nueva Reflexión";
+            btnSubmit.innerText = "Publicar Entrada";
+            btnCancel.style.display = "none";
+        }
+
+        // 4. GUARDAR O ACTUALIZAR (POST o PUT)
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const data = {
+            const id = document.getElementById('edit-id').value;
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API}/${id}` : API;
+
+            const payload = {
                 fecha: document.getElementById('fecha').value,
                 tema: document.getElementById('tema').value,
                 objetivo: document.getElementById('objetivo').value,
@@ -32,13 +145,33 @@
                 terminos: document.getElementById('terminos').value,
                 impactoSocial: document.getElementById('impactoSocial').value
             };
-            await fetch(API, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            });
-            window.location.href = '../index.html';
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = 'Procesando...';
+
+            try {
+                await fetch(url, {
+                    method: method,
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                resetForm();
+                loadEntries();
+                alert(id ? 'Entrada actualizada' : 'Entrada creada');
+            } catch (err) { alert('Error en la API'); }
+            finally { btnSubmit.disabled = false; }
         });
+
+        // 5. BORRAR
+        async function deleteEntry(id) {
+            if(!confirm('¿Seguro que quieres borrar esta reflexión?')) return;
+            try {
+                await fetch(`${API}/${id}`, { method: 'DELETE' });
+                loadEntries();
+            } catch (e) { alert('Error al borrar'); }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadEntries);
     </script>
 </body>
 </html>
