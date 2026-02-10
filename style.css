@@ -3,7 +3,7 @@
     --accent-glow: rgba(0, 242, 254, 0.4);
     --bg: #030712;
     --card-bg: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.1);
     --text: #f9fafb;
     --text-dim: #9ca3af;
     --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -16,7 +16,6 @@ body {
     background-color: var(--bg);
     color: var(--text);
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
 .glow-bg {
@@ -28,40 +27,34 @@ body {
 
 .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-/* Login Estilos */
+/* Login */
 .login-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #030712;
-    z-index: 2000;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #030712; z-index: 2000;
     display: flex; align-items: center; justify-content: center;
 }
 
 .login-box {
-    background: var(--card-bg);
-    padding: 40px; border-radius: 30px;
-    border: 1px solid var(--border);
-    backdrop-filter: blur(20px);
+    background: var(--card-bg); padding: 40px; border-radius: 30px;
+    border: 1px solid var(--border); backdrop-filter: blur(20px);
     text-align: center; width: 350px;
 }
 
 .login-box input {
     width: 100%; padding: 12px; margin-bottom: 10px;
     background: #000; border: 1px solid var(--border);
-    border-radius: 10px; color: white; outline: none;
+    border-radius: 10px; color: white;
 }
 
 .btn-main {
     width: 100%; padding: 14px; background: var(--accent);
     color: #000; font-weight: 800; border: none;
-    border-radius: 12px; cursor: pointer; transition: 0.3s;
+    border-radius: 12px; cursor: pointer;
 }
 
-/* Hero & Header */
+/* Hero */
 .hero { padding: 60px 0 20px; text-align: center; }
-.hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; margin-bottom: 15px; }
-
-/* Corrección de error background-clip */
+.hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; }
 .hero span {
     background: linear-gradient(90deg, var(--accent), #4facfe);
     background-clip: text;
@@ -69,15 +62,14 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+/* Secret Box */
 .secret-box {
     background: linear-gradient(90deg, rgba(0, 242, 254, 0.1), transparent);
-    padding: 20px; border-radius: 15px;
-    border-left: 4px solid var(--accent);
-    margin: 20px auto; max-width: 600px;
-    display: none; animation: fadeIn 1s ease;
+    padding: 20px; border-radius: 15px; border-left: 4px solid var(--accent);
+    margin: 20px auto; max-width: 600px; display: none;
 }
 
-/* Cards */
+/* Tarjetas */
 .grid-layout {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 30px; padding: 40px 0;
@@ -97,9 +89,103 @@ body {
     box-shadow: 0 15px 30px var(--accent-glow);
 }
 
-.section-label { font-size: 0.65rem; color: #6366f1; text-transform: uppercase; font-weight: 800; margin-top: 25px; display: block; }
+.date-tag { color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: block; }
+.card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #fff; letter-spacing: -0.5px; }
+
+.section-label { font-size: 0.65rem; color: #6366f1; text-transform: uppercase; font-weight: 800; margin-top: 25px; display: block; letter-spacing: 1px; }
+.card p { font-size: 0.95rem; color: #d1d5db; margin-top: 6px; }
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+.tag { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; color: var(--accent); }
 
 @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* --- FOOTER REPARADO --- */
+.main-footer {
+    text-align: center;
+    padding: 60px 0;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(to top, rgba(0, 242, 254, 0.02), transparent);
+}
 
-.main-footer { text-align: center; padding: 60px; opacity: 0.5; }
+.main-footer p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 300;
+}
+
+.main-footer .location {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-top: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    filter: drop-shadow(0 0 5px var(--accent-glow));
+}
+/* --- NAVBAR REPARADA --- */
+.navbar {
+    padding: 20px 5%; /* Espaciado lateral flexible */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(3, 7, 18, 0.8); /* Fondo semi-transparente para que no se pierda */
+}
+
+.logo { 
+    font-weight: 800; 
+    font-size: 1.6rem; 
+    letter-spacing: -1px;
+}
+
+.nav-info {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+/* --- HERO REPARADO --- */
+.hero { 
+    padding: 80px 0 40px; 
+    text-align: center;
+    position: relative;
+}
+
+.hero h1 { 
+    font-size: clamp(2.5rem, 10vw, 4.5rem); 
+    font-weight: 800; 
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+/* Corrección definitiva del degradado del texto */
+.hero span {
+    background: linear-gradient(90deg, var(--accent), #4facfe);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* Importante para que el clip funcione bien */
+    filter: drop-shadow(0 0 15px var(--accent-glow));
+}
+
+/* Banner de Secreto ajustado */
+.secret-box {
+    background: rgba(0, 242, 254, 0.05);
+    padding: 20px 30px;
+    border-radius: 20px;
+    border: 1px dashed var(--accent);
+    margin: 30px auto 0;
+    max-width: 600px;
+    font-size: 1.1rem;
+    color: var(--text);
+    display: none;
+    animation: reveal 1s ease-out;
+}

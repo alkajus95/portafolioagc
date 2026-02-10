@@ -36,22 +36,41 @@ async function cargarReflexiones() {
         const res = await fetch(API_URL);
         const data = await res.json();
         container.innerHTML = '';
+        
         data.reverse().forEach((item, index) => {
             const card = document.createElement('article');
-            card.className = 'card';
+            card.className = 'card'; // Aquí recuperamos el estilo premium
             card.style.animationDelay = `${index * 0.1}s`;
+            
+            // Lógica para las etiquetas de términos
+            const tagsHtml = item.terminos 
+                ? item.terminos.split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('') 
+                : '';
+
             card.innerHTML = `
-                <span style="color:var(--accent); font-size:0.75rem; font-weight:800;">${item.fecha}</span>
-                <h3 style="margin-top:10px;">${item.tema}</h3>
-                <p><strong>Objetivo:</strong> ${item.objetivo}</p>
-                <span class="section-label">Análisis</span>
+                <span class="date-tag">${item.fecha}</span>
+                <h3>${item.tema}</h3>
+                
+                <p><strong>Meta:</strong> ${item.objetivo}</p>
+                
+                <span class="section-label">Análisis Académico</span>
                 <p><em>${item.reconstruccion}</em></p>
-                <span class="section-label">Reflexión</span>
+                
+                <span class="section-label">Reflexión Personal</span>
                 <p style="color:#fff;">"${item.queAprendi}"</p>
-                <span class="section-label">Solidaridad</span>
-                <p style="font-size:0.85rem; border-left:2px solid var(--accent); padding-left:10px;">${item.impactoSocial}</p>
+                
+                <div class="tag-cloud">
+                    ${tagsHtml}
+                </div>
+
+                <span class="section-label">Solidaridad y Justicia</span>
+                <p style="font-size:0.85rem; border-left:2px solid var(--accent); padding-left:12px; margin-top:10px; color: var(--text-dim);">
+                    ${item.impactoSocial}
+                </p>
             `;
             container.appendChild(card);
         });
-    } catch (e) { container.innerHTML = '<p>Error de conexión con la API.</p>'; }
+    } catch (e) { 
+        container.innerHTML = '<p style="text-align:center; width:100%;">Error de conexión con la bitácora.</p>'; 
+    }
 }
