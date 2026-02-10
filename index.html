@@ -3,36 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio de Ética | Alejandro</title>
+    <title>Portafolio de Ética | Alejandro Gracia</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="glow-bg"></div>
 
-    <nav class="navbar">
-        <div class="logo">AC<span>.</span></div>
-        <div class="nav-info" style="font-size: 0.7rem; color: var(--text-dim);">BARRANQUILLA, 2026</div>
-    </nav>
-
-    <header class="hero">
-        <div class="container">
-            <h1>Portafolio de <span>Ética</span></h1>
+    <div id="login-screen" class="login-overlay">
+        <div class="login-box">
+            <h2>Acceso Privado</h2>
+            <p style="margin-bottom: 20px; font-size: 0.8rem; color: var(--text-dim);">Solo amigos autorizados</p>
+            <input type="text" id="user-input" placeholder="Tu nombre">
+            <input type="password" id="pass-input" placeholder="Contraseña">
+            <button class="btn-main" onclick="validarAcceso()">Ingresar</button>
+            <p id="login-error" style="color: #ff4757; margin-top: 15px; font-size: 0.8rem; display: none;">Llave incorrecta</p>
         </div>
-    </header>
+    </div>
 
-    <section class="intro-section">
-        <p class="intro-text">Registro digital de reflexiones sobre carisma, compromiso social y justicia.</p>
-    </section>
+    <div id="main-content" style="display: none;">
+        <nav class="navbar">
+            <div class="logo">AG<span>.</span></div>
+            <div id="user-greeting" class="nav-info"></div>
+        </nav>
 
-    <main class="container">
-        <div id="cards-container" class="grid-layout">
+        <header class="hero">
+            <div class="container">
+                <h1>Bitácora de <span>Ética</span></h1>
+                <div id="secret-banner" class="secret-box">
+                    </div>
             </div>
-    </main>
+        </header>
 
-    <footer style="text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem;">
-        Alejandro Gracia Carrillo • Proyecto de Ética
-    </footer>
+        <main class="container">
+            <div id="cards-grid" class="grid-layout">
+                <div class="loader">Sincronizando reflexiones...</div>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <p>Alejandro Gracia Carrillo • 11B</p>
+            <p class="location">Barranquilla, Colombia • 2026</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
