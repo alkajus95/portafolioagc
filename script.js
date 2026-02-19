@@ -5,6 +5,7 @@ const AMIGOS = {
     "gonzalejo": { pass: "alfaro", secreto: "Valery te metio cule cachera 👹" },
     "gabito": { pass: "sonia", secreto: "no voy a ponerte secreto gabito" },
     "jcvegaq": { pass: "camila", secreto: "Te le declaraste a Jire" },
+    "meloski": { pass: "mmejiag", secreto: "Dices que hay peladas boff aunque tengas novia rata" },
     "juanvargasb": { pass: "bedoya", secreto: "Compañero de cuarto, yo se que quieres volver con Marianita" }
 };
 
